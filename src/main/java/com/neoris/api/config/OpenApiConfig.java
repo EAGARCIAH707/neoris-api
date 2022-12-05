@@ -26,8 +26,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
         servers = {
                 @Server(url = "http://localhost:8080/neoris-api/"),
                 @Server(
-                        url =
-                                "https://incentive-program-gateway-7zg74kgo.uc.gateway.dev/incentive-program-api/v1")
+                        url = "https://neoris-api-3txis2veua-uc.a.run.app/neoris-api/")
         })
 @SecurityScheme(
         name = "bearerAuth",
