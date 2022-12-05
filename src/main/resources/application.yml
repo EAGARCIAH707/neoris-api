@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${sm://neoris-db-user}
+    url: ${sm://neoris-db-url}
+    password: ${sm://neoris-db-password}
+server:
+  servlet:
+    context-path: /neoris-api
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-app.html
