@@ -1,23 +1,24 @@
 package com.neoris.api.util.error;
 
 import com.neoris.api.model.dto.ResponseErrorDto;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ControllerAdvice
+@Log4j2
+@RestControllerAdvice
 public class RestExceptionHandler {
 
-    private static final ConcurrentHashMap<String, HttpStatus> STATUS_CODES = new ConcurrentHashMap();
+    private static final ConcurrentHashMap<String, HttpStatus> STATUS_CODES = new ConcurrentHashMap<>();
 
     public RestExceptionHandler() {
         STATUS_CODES.put(ConflictException.class.getSimpleName(), HttpStatus.CONFLICT);
@@ -28,7 +29,8 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
     public final ResponseEntity<Object> handleAllExceptions(
-            Exception ex, WebRequest request, HttpServletRequest httpRequest) {
+            Exception ex, HttpServletRequest httpRequest) {
+        log.error("General system exception: ", ex);
         return new ResponseEntity<>(
                 ResponseErrorDto.builder()
                         .errorCode(0)
@@ -43,7 +45,8 @@ public class RestExceptionHandler {
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public final ResponseEntity<Object> handleValidationFieldsException(
-            MethodArgumentNotValidException ex, WebRequest request, HttpServletRequest httpRequest) {
+            MethodArgumentNotValidException ex, HttpServletRequest httpRequest) {
+        log.error("Bad request exception: ", ex);
         return new ResponseEntity<>(
                 ResponseErrorDto.builder()
                         .errorCode(0)

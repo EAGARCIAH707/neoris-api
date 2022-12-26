@@ -3,11 +3,14 @@ package com.neoris.api.service.client.impl;
 import com.neoris.api.model.dto.ClientDto;
 import com.neoris.api.model.entity.Client;
 import com.neoris.api.repository.client.impl.IClientRepositoryFacade;
+import com.neoris.api.repository.movement.impl.IMovementRepositoryFacade;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,6 +24,9 @@ class ClientServiceTest {
 
     @Mock
     private IClientRepositoryFacade clientRepository;
+
+    @Mock
+    private IMovementRepositoryFacade movementRepository;
 
     @Test
     void create() {
@@ -66,5 +72,11 @@ class ClientServiceTest {
             assertEquals("Client not found", e.getMessage());
 
         }
+    }
+
+    @Test
+    void generateReport() {
+        when(movementRepository.findByClientAndDate(any(), any(), any())).thenReturn(null);
+        assertDoesNotThrow(() -> clientService.generateReport(1, new Date(), new Date()));
     }
 }

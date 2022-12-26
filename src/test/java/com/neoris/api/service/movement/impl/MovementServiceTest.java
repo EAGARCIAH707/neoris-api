@@ -13,7 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -84,7 +84,22 @@ class MovementServiceTest {
         var request = new MovementDto();
         request.setValue(BigDecimal.valueOf(100));
         var result = movementService.update(request, 1);
-        assert result != null;
+        assertNotNull(result);
 
+    }
+
+    @Test
+    void delete() {
+        var movementMock = new Movement();
+        movementMock.setMovementId(1);
+        movementMock.setBalance(BigDecimal.valueOf(1000));
+        movementMock.setValue(BigDecimal.valueOf(100));
+        movementMock.setType("CREDITO");
+        when(movementRepository.update(any())).thenReturn(movementMock);
+        when(movementRepository.findById(any())).thenReturn(movementMock);
+        var request = new MovementDto();
+        request.setValue(BigDecimal.valueOf(100));
+        var result = movementService.delete(1);
+        assertNull(result);
     }
 }

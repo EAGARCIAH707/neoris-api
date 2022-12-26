@@ -1,6 +1,7 @@
 package com.neoris.api.controller.impl;
 
 import com.neoris.api.model.dto.ClientDto;
+import com.neoris.api.model.dto.ReportDto;
 import com.neoris.api.service.client.IClientService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,9 +10,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -52,5 +56,16 @@ class ClientControllerTest {
         var result = clientController.deleteClient(1);
 
         assertEquals(HttpStatus.NO_CONTENT, result.getStatusCode());
+    }
+
+    @Test
+    void generateReport() {
+        var reportMock = new ArrayList<ReportDto>();
+        reportMock.add(ReportDto.builder().build());
+
+        when(clientService.generateReport(any(), any(), any())).thenReturn(reportMock);
+        var result = clientController.generateReport(1, new Date(), new Date());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertFalse(Objects.requireNonNull(result.getBody()).isEmpty());
     }
 }
