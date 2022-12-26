@@ -2,6 +2,7 @@ package com.neoris.api.controller;
 
 import com.neoris.api.model.dto.MovementDto;
 import com.neoris.api.model.dto.ResponseErrorDto;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface IMovementController {
 
-    @Tag(name = "Create Movement", description = "Service used to create a new movement")
+    @Tag(name = "Movements", description = "Crud services for entity movements")
+    @Operation(summary = "Create Movement", description = "Service used to create a new movement")
     @ApiResponses(
             value = {
                     @ApiResponse(
@@ -26,7 +28,8 @@ public interface IMovementController {
     ResponseEntity<MovementDto> createMovement(MovementDto movement);
 
 
-    @Tag(name = "Update Movement", description = "Service used to update a existing movement")
+    @Tag(name = "Movements")
+    @Operation(summary = "Update Movement", description = "Service used to update a existing movement")
     @ApiResponses(
             value = {
                     @ApiResponse(
@@ -41,7 +44,8 @@ public interface IMovementController {
     ResponseEntity<MovementDto> updateMovement(Integer movementId, MovementDto movement);
 
 
-    @Tag(name = "Delete Movement", description = "Service used to delete a existing movement")
+    @Tag(name = "Movements")
+    @Operation(summary = "Delete Movement", description = "Service used to delete a existing movement")
     @ApiResponses(
             value = {
                     @ApiResponse(

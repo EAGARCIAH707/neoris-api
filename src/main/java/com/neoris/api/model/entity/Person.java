@@ -13,7 +13,7 @@ import java.util.Objects;
 @MappedSuperclass
 public class Person {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "person_id")
     private Integer personId;
